@@ -28,7 +28,7 @@ import (
 var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "Used to create serverless function packages",
-	Long: `This application is a tool to generate serverless function artifacts.
+	Long: `This command generates AWS Lambda deployable serverless function artifacts.
 The generated artifacts are compatible for use with the runload command.`,
 	Run: runGenerate,
 }

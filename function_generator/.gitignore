@@ -4,3 +4,5 @@ build/
 !httploadgenerator.jar
 
 result-data/
+
+synthetic-function-generator

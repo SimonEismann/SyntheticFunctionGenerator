@@ -26,7 +26,7 @@ var (
 		Use:   "runload [flags]",
 		Short: "Start load run for measurement data",
 		Long: `This command drives load on the generated functions on lambda.
-It writes the results on the local filesystem for later evaluation.`,
+It writes the results on the local filesystem specified by the flag --result-dir for later evaluation.`,
 		Run: runLoad,
 	}
 	functionDir     string
@@ -39,7 +39,7 @@ It writes the results on the local filesystem for later evaluation.`,
 
 func init() {
 	rootCmd.AddCommand(runloadCmd)
-	runloadCmd.Flags().StringVarP(&functionDir, "func-dir", "f", "", "Directory containing the lambda functions")
+	runloadCmd.Flags().StringVarP(&functionDir, "func-dir", "f", "", "Directory containing the lambda functions (required)")
 	runloadCmd.Flags().StringVarP(&resultDir, "result-dir", "r", "./result-data", "Directory for the measurement results")
 	runloadCmd.Flags().IntVarP(&requestsPerSec, "req-per-sec", "p", 50, "Target requests per second")
 	runloadCmd.Flags().IntVarP(&duration, "duration", "d", 10, "Target duration in seconds")
