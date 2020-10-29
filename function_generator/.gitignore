@@ -1,0 +1,6 @@
+*.js
+build/
+
+!httploadgenerator.jar
+
+result-data/
