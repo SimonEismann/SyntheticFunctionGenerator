@@ -9,6 +9,7 @@ TODO Extending function segments
 TODO Bestehnde metriken
 TODO Metriken extenden
 
+TODO Cites us ähnlich wie bei teastore mit arxiv link (siehe rechts oben)
 ## Building the CLI
 
 Requirements:
