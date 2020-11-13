@@ -1,15 +1,26 @@
 # Synthetic Function Generator
-Synthetic function generator from the manuscript "Sizeless: Predicting the optimal size of serverless functions" 
-Er (1) generiert funktionen baseierend auf segmenten (2) er kombiniert sie randomly (3) Monitored zeugs (4) benchmarken
-Er erlaubt es viele funtionen zu generieren und benchmarken
+This is the Synthetic function generator from the manuscript "Sizeless: Predicting the optimal size of serverless functions".
+It generates AWS Lambda deployable functions by randomly combining commonly occurring function segments.
+The generated functions are instrumented with a monitoring functionality.
+Besides the generation it also provides the possibility to directly benchmark the resulting functions.
+Overall, it allows the generation of a large number of serverless functions and benchmarking them.
 
-TODO Bestehende function segments
-TODO Extending function segments
+This tool is implemented as a Command Line Interface (CLI) which allows automating experiments, e.g. using the CLI in scripts.
 
-TODO Bestehnde metriken
-TODO Metriken extenden
+## Cite Us
+The Synthetic Function Generator makes its first appearance in the manuscript "Sizeless: Predicting the optimal size of serverless functions", which can currently be found under https://arxiv.org/abs/2010.15162.
+If you use the Synthetic Function Generator please cite the following publication:
+```
+@misc{eismann2020sizeless,
+      title={Sizeless: Predicting the optimal size of serverless functions},
+      author={Simon Eismann and Long Bui and Johannes Grohmann and Cristina L. Abad and Nikolas Herbst and Samuel Kounev},
+      year={2020},
+      eprint={2010.15162},
+      archivePrefix={arXiv},
+      primaryClass={cs.DC}
+}
+```
 
-TODO Cites us ähnlich wie bei teastore mit arxiv link (siehe rechts oben)
 ## Building the CLI
 
 Requirements:
@@ -20,21 +31,38 @@ Inside the `function-generator` directory run the command `go build .`.
 By default this results in a file named `synthetic-function-generator`.
 
 ## Usage requirements
+When using the CLI only to generate functions, you will only need the steps 4 and 5 in order to make the AWS Lambda functions deployable.
+To be able to use the load running functionality, however, there is some setup involved.
+This is due to some of the AWS tools being only available as CLI and due to the setup and teardown scripts being NodeJS scripts.
 
-### Node.js
+### 1. Node.js
+You will need a working NodeJS runtime.
+This means that you will have to setup your environment so that it is possible to run the `node` command.
+It is generally recommended to use the LTS version.
 
-### SAM CLI
+With `node -v` you can check both whether you have a working NodeJS runtime and which version you have.
 
-### AWS Credentials
+### 2. AWS CLI and Serverless Application Model (SAM) CLI
+The load runner makes use of the AWS CLI to cleanup the generated AWS Lambda functions.
+See the [official documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) on how to install the AWS CLI.
 
-### Deploy the dependency layer
+The Serverless Application Model CLI needs to be installed and invokable.
+See the [official AWS SAM CLI documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) on how to do so.
+This is needed to deploy the generated AWS Lambda functions.
+
+### 3. AWS Credentials
+Both the AWS CLI and SAM CLI read the AWS Credentials that are needed to perform actions on AWS from either environment variables or by convention from a file in `$HOME/.aws/credentials`.
+Make sure that a valid **Access Key** and **Secret Key** can be found by both CLIs.
+See the [official documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) for more details on configuring the AWS CLI.
+
+### 4. Deploy the dependency layer
 The monitoring add-on has some dependencies on certain npm packages.
 To avoid that each synthetic function package has to bring these dependencies, the use of a dependency layer proved to be the most efficient way.
 The file `dependencyLayer.zip` represents a ready-to-deploy package to add the required dependencies as a Lambda Layer. Follow the instructions on `AWS Console -> Lambda -> Additional resources -> Layers` to deploy the package.
 The dependency layer will be assigned a **Version ARN**, which is needed to generate functions using the CLI.
 For more information about AWS Lambda Layers, see [here](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
 
-### Create a AWS Lambda role for the synthetic functions
+### 5. Create a AWS Lambda role for the synthetic functions
 The synthetic Lambda functions need to be assigned a role ARN to allow the function to access other AWS services.
 Either create a new role that defines what services the Lambda functions are allowed to access or use an existing role.
 Make sure that AWS Lambda is listed in the **Trusted Entities** section so that it can be used by Lambda.
@@ -118,3 +146,5 @@ Flags:
 ```
 
 ## Implementing additional segments
+
+## Extending the collected metrics
