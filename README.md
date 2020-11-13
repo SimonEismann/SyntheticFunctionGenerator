@@ -1,4 +1,13 @@
 # Synthetic Function Generator
+Synthetic function generator from the manuscript "Sizeless: Predicting the optimal size of serverless functions" 
+Er (1) generiert funktionen baseierend auf segmenten (2) er kombiniert sie randomly (3) Monitored zeugs (4) benchmarken
+Er erlaubt es viele funtionen zu generieren und benchmarken
+
+TODO Bestehende function segments
+TODO Extending function segments
+
+TODO Bestehnde metriken
+TODO Metriken extenden
 
 ## Building the CLI
 
